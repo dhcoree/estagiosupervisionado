@@ -1,0 +1,24 @@
+{
+  "name": "basic-crud",
+  "version": "1.0.0",
+  "description": "Basic crud demonstration",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon ."
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nedb": "^1.8.0",
+    "sqlite3": "^5.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "repository": "https://github.com/userjapa/basic-crud.git",
+  "author": "userJapa",
+  "license": "MIT",
+  "private": false
+}
