@@ -21,10 +21,10 @@ module.exports = {
   },
   read(vendas) {
     return new Promise((resolve, reject) => {
-      vendasStore.find(vendas, (error, vendass) => {
+      vendasStore.find(vendas, (error, vendas) => {
         if (error) return reject(error);
 
-        resolve(vendass);
+        resolve(vendas);
       });
     });
   },

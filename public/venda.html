@@ -23,15 +23,12 @@
       <form>
         <div>
           <div>
-            <label for="product_description">Descrição</label>
+            <label for="venda_cliente">Cliente</label>
           </div>
           <div>
-            <input
-              id="product_description"
-              name="description"
-              type="text"
-              required
-            />
+            <select id="venda_cliente" name="cliente" required>
+              <option value="" selected>Selecione um cliente</option>
+            </select>
           </div>
         </div>
         <div>
@@ -73,5 +70,5 @@
     </div>
   </body>
 
-  <script src="/public/assets/js/vendas.js"></script>
+  <script src="/public/assets/js/venda.js"></script>
 </html>
