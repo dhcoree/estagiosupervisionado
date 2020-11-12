@@ -4,9 +4,11 @@ const express = require('express'),
 
 // Import Product Controller
 const product = require('./controller/product.controller')
+const vendas = require('./controller/vendas.controller')
 
 // Setting route paths
 route.use('/product', product)
+route.use('/vendas', vendas)
 
 route.use('*', (request, response) => {
   response.status(404).json({ success: false, message: 'Not found' })

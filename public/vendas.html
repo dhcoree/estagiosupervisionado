@@ -1,0 +1,51 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de produto</title>
+
+    <link rel="stylesheet" href="public/assets/css/style.css">
+  </head>
+  <body>
+    <div class="main">
+      <h1>Cadastro produto</h1>
+
+      <form>
+        <div>
+          <div>
+            <label for="product_description">Descrição</label>
+          </div>
+          <div>
+            <input id="product_description" name="description" type="text" required>
+          </div>
+        </div>
+        <div>
+          <div>
+            <label for="product_id">Preço</label>
+          </div>
+          <div>
+            <input id="product_price" name="price" type="number" step="0.01" required>
+          </div>
+        </div>
+        <div>
+          <button type="button" onclick="getAll()">Search</button>
+          <button type="submit">Save</button>
+          <button id="cancel_update" type="button" class="hidden" onclick="cancelUpdate()">Cancel</button>
+        </div>
+      </form>
+
+      <table>
+        <thead>
+          <th class="description">Description</th>
+          <th class="price">Price</th>
+          <th class="options">Options</th>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </body>
+
+  <script src="/public/assets/js/vendas.js"></script>
+</html>

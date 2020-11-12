@@ -31,6 +31,11 @@ app.get('/', (request, response) => {
   response.sendFile(path.resolve(__dirname, 'public/index.html'))
 })
 
+// Product page
+app.get('/vendas', (request, response) => {
+  response.sendFile(path.resolve(__dirname, 'public/vendas.html'))
+})
+
 // Public path
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
