@@ -1,116 +1,114 @@
 // Import and create route
-const express = require('express'),
-      route   = express.Router()
+const express = require("express"),
+  route = express.Router();
 
 // Import cliente Model
-const cliente = require('./../model/cliente.model')
+const cliente = require("./../model/cliente.model");
 
 // Setting GET path
-route.get('/', async (request, response) => {
+route.get("/", async (request, response) => {
   try {
-    let { _id, description, price } = request.query
+    let { _id, nome, idade } = request.query;
 
-    const payload = {}
+    const payload = {};
 
     if (_id) {
-      payload['_id'] = _id
+      payload["_id"] = _id;
     }
 
-    if (description) {
-      payload['description'] = description
+    if (nome) {
+      payload["nome"] = nome;
     }
 
-    if (price) {
-      price = parseFloat(price)
+    if (idade) {
+      idade = parseFloat(idade);
 
-      if (isNaN(price))
-        throw { message: `Invalid parameters - 'description' is required` }
+      if (isNaN(idade))
+        throw { message: `Invalid parameters - 'idade' is not a number` };
 
-      payload['price'] = price
+      payload["idade"] = idade;
     }
 
-    const clientes = await cliente.read(payload)
+    const clientes = await cliente.read(payload);
 
-    response.json({ success: true, data: clientes, error: null })
+    response.json({ success: true, data: clientes, error: null });
   } catch (error) {
-    response.status(500).json({ success: false, data: [], error })
+    response.status(500).json({ success: false, data: [], error });
   }
-})
+});
 
 // Setting POST path
-route.post('/', async (request, response) => {
+route.post("/", async (request, response) => {
   try {
-    let { description, price } = (typeof request.body == 'string') ? JSON.parse(request.body) : request.body
+    let { nome, idade } =
+      typeof request.body == "string" ? JSON.parse(request.body) : request.body;
 
-    if (!description)
-      throw { message: `Invalid parameters - 'description' is required` }
-    if (!price)
-      throw { message: `Invalid parameters - 'price' is required` }
+    if (!nome) throw { message: `Invalid parameters - 'nome' is required` };
+    if (!idade) throw { message: `Invalid parameters - 'idade' is required` };
 
-    price = parseFloat(price)
+    idade = parseFloat(idade);
 
-    if (isNaN(price))
-      throw { message: `Invalid parameters - 'price' is not a number` }
+    if (isNaN(idade))
+      throw { message: `Invalid parameters - 'idade' is not a number` };
 
     const payload = {
-      description,
-      price
-    }
+      nome,
+      idade,
+    };
 
-    const newcliente = await cliente.create(payload)
+    const novoCliente = await cliente.create(payload);
 
-    response.json({ success: true, data: newcliente, error: null })
+    response.json({ success: true, data: novoCliente, error: null });
   } catch (error) {
-    response.status(500).json({ success: false, data: null, error })
+    response.status(500).json({ success: false, data: null, error });
   }
-})
+});
 
 // Setting PUT path
-route.put('/:_id', async (request, response) => {
+route.put("/:_id", async (request, response) => {
   try {
-    let { _id }                = request.params,
-        { description, price } = (typeof request.body == 'string') ? JSON.parse(request.body) : request.body
+    let { _id } = request.params,
+      { nome, idade } =
+        typeof request.body == "string"
+          ? JSON.parse(request.body)
+          : request.body;
 
-    if (!_id)
-      throw { message: `Invalid parameters - '_id' is required` }
-    if (!description)
-      throw { message: `Invalid parameters - 'description' is required` }
-    if (!price)
-      throw { message: `Invalid parameters - 'price' is required` }
+    if (!_id) throw { message: `Invalid parameters - '_id' is required` };
+    if (!nome) throw { message: `Invalid parameters - 'nome' is required` };
+    if (!idade) throw { message: `Invalid parameters - 'idade' is required` };
 
-    price = parseFloat(price)
+    idade = parseFloat(idade);
 
-    if (isNaN(price))
-      throw { message: `Invalid parameters - 'price' is not a number` }
+    if (isNaN(idade))
+      throw { message: `Invalid parameters - 'idade' is not a number` };
 
     const payload = {
-      description,
-      price
-    }
+      nome,
+      idade,
+    };
 
-    const numReplaced = await cliente.update(_id, payload)
+    const numReplaced = await cliente.update(_id, payload);
 
-    response.json({ success: true, data: numReplaced, error: null })
+    response.json({ success: true, data: numReplaced, error: null });
   } catch (error) {
-    response.status(500).json({ success: false, data: 0, error })
+    response.status(500).json({ success: false, data: 0, error });
   }
-})
+});
 
 // Setting DELETE path
-route.delete('/:_id', async (request, response) => {
+route.delete("/:_id", async (request, response) => {
   try {
-    const { _id } = request.params
+    const { _id } = request.params;
 
-    if (!_id)
-      throw { message: 'Invalid parameters' }
+    if (!_id) throw { message: "Invalid parameters" };
 
-    const numRemoved = await cliente.delete(_id)
+    const numRemoved = await cliente.delete(_id);
 
-    response.json({ success: true, data: numRemoved, error: null })
+    response.json({ success: true, data: numRemoved, error: null });
   } catch (error) {
-    response.status(500).json({ success: false, data: 0, error })
+    response.status(500).json({ success: false, data: 0, error });
   }
-})
+});
 
 // Export route
-module.exports = route
+module.exports = route;

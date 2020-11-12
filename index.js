@@ -1,51 +1,58 @@
 // Server
-const express = require('express')
+const express = require("express");
 // Middlewares
-const bodyParser = require('body-parser'),
-      cors       = require('cors')
+const bodyParser = require("body-parser"),
+  cors = require("cors");
 
 // Utils
-const path = require('path')
+const path = require("path");
 
 // Environment variables
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 8080;
 
 // API
-const api = require('./api')
+const api = require("./api");
 
 // Creating application
-const app = express()
+const app = express();
 
 // Setting middlewares
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Authorization', 'Content-Type']
-}))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Authorization", "Content-Type"],
+  })
+);
 
 // Setting routes
 // Application page
-app.get('/', (request, response) => {
-  response.sendFile(path.resolve(__dirname, 'public/index.html'))
-})
+app.get("/", (request, response) => {
+  response.sendFile(path.resolve(__dirname, "public/index.html"));
+});
 
-// Product page
-app.get('/vendas', (request, response) => {
-  response.sendFile(path.resolve(__dirname, 'public/vendas.html'))
-})
+// Cliente page
+app.get("/clientes", (request, response) => {
+  response.sendFile(path.resolve(__dirname, "public/cliente.html"));
+});
+
+// Vendas page
+app.get("/vendas", (request, response) => {
+  response.sendFile(path.resolve(__dirname, "public/vendas.html"));
+});
 
 // Public path
-app.use('/public', express.static(path.join(__dirname, 'public')))
+app.use("/public", express.static(path.join(__dirname, "public")));
 
 // API Route
-app.use('/api', api)
+app.use("/api", api);
 
 // 404 Not found
-app.use('*', (request, response) => {
-  response.sendFile(path.resolve(__dirname, 'public/error.html'))
-})
+app.use("*", (request, response) => {
+  response.sendFile(path.resolve(__dirname, "public/error.html"));
+});
 
 // Starting app
-app.listen(PORT, () => console.log(`Running at port ${PORT}`))
+app.listen(PORT, () => console.log(`Running at port ${PORT}`));
