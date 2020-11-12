@@ -5,7 +5,7 @@ const path = require("path");
 
 // Creating Store
 const productStore = new Datastore({
-  filename: path.resolve(__dirname, "./nedb/cliente.db"),
+  filename: path.resolve(__dirname, "./nedb/produto.db"),
   autoload: true,
 });
 

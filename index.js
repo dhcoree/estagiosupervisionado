@@ -34,13 +34,18 @@ app.get("/", (request, response) => {
 });
 
 // Cliente page
-app.get("/clientes", (request, response) => {
+app.get("/cliente", (request, response) => {
   response.sendFile(path.resolve(__dirname, "public/cliente.html"));
 });
 
+// Cliente page
+app.get("/produto", (request, response) => {
+  response.sendFile(path.resolve(__dirname, "public/produto.html"));
+});
+
 // Vendas page
-app.get("/vendas", (request, response) => {
-  response.sendFile(path.resolve(__dirname, "public/vendas.html"));
+app.get("/venda", (request, response) => {
+  response.sendFile(path.resolve(__dirname, "public/venda.html"));
 });
 
 // Public path

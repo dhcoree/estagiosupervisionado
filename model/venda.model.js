@@ -4,33 +4,33 @@ const Datastore = require("nedb");
 const path = require("path");
 
 // Creating Store
-const productStore = new Datastore({
-  filename: path.resolve(__dirname, "./nedb/cliente.db"),
+const vendasStore = new Datastore({
+  filename: path.resolve(__dirname, "./nedb/venda.db"),
   autoload: true,
 });
 
 module.exports = {
-  create(product) {
+  create(vendas) {
     return new Promise((resolve, reject) => {
-      productStore.insert(product, (error, newProduct) => {
+      vendasStore.insert(vendas, (error, newvendas) => {
         if (error) return reject(error);
 
-        resolve(newProduct);
+        resolve(newvendas);
       });
     });
   },
-  read(product) {
+  read(vendas) {
     return new Promise((resolve, reject) => {
-      productStore.find(product, (error, products) => {
+      vendasStore.find(vendas, (error, vendass) => {
         if (error) return reject(error);
 
-        resolve(products);
+        resolve(vendass);
       });
     });
   },
-  update(_id, product) {
+  update(_id, vendas) {
     return new Promise((resolve, reject) => {
-      productStore.update({ _id }, product, {}, (error, numReplaced) => {
+      vendasStore.update({ _id }, vendas, {}, (error, numReplaced) => {
         if (error) return reject(error);
 
         resolve(numReplaced);
@@ -39,7 +39,7 @@ module.exports = {
   },
   delete(_id) {
     return new Promise((resolve, reject) => {
-      productStore.remove({ _id }, {}, (error, numRemoved) => {
+      vendasStore.remove({ _id }, {}, (error, numRemoved) => {
         if (error) return reject(error);
 
         resolve(numRemoved);
