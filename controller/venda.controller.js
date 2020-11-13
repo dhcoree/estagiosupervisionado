@@ -8,7 +8,7 @@ const venda = require("./../model/venda.model");
 // Setting GET path
 route.get("/", async (request, response) => {
   try {
-    let { _id, description, price } = request.query;
+    let { _id, cliente, produto, quantidade, total } = request.query;
 
     const payload = {};
 
@@ -16,17 +16,30 @@ route.get("/", async (request, response) => {
       payload["_id"] = _id;
     }
 
-    if (description) {
-      payload["description"] = description;
+    if (cliente) {
+      payload["cliente"] = cliente;
     }
 
-    if (price) {
-      price = parseFloat(price);
+    if (produto) {
+      payload["produto"] = produto;
+    }
 
-      if (isNaN(price))
-        throw { message: `Invalid parameters - 'description' is required` };
+    if (quantidade) {
+      quantidade = parseFloat(quantidade);
 
-      payload["price"] = price;
+      if (isNaN(quantidade))
+        throw { message: `Invalid parameters - 'quantidade' is not a number` };
+
+      payload["quantidade"] = quantidade;
+    }
+
+    if (total) {
+      total = parseFloat(total);
+
+      if (isNaN(total))
+        throw { message: `Invalid parameters - 'total' is not a number` };
+
+      payload["total"] = total;
     }
 
     const vendas = await venda.read(payload);
@@ -40,26 +53,35 @@ route.get("/", async (request, response) => {
 // Setting POST path
 route.post("/", async (request, response) => {
   try {
-    let { description, price } =
+    let { cliente, produto, quantidade, total } =
       typeof request.body == "string" ? JSON.parse(request.body) : request.body;
 
-    if (!description)
-      throw { message: `Invalid parameters - 'description' is required` };
-    if (!price) throw { message: `Invalid parameters - 'price' is required` };
+    if (!cliente)
+      throw { message: `Invalid parameters - 'cliente' is required` };
 
-    price = parseFloat(price);
+    if (!produto)
+      throw { message: `Invalid parameters - 'produto' is required` };
 
-    if (isNaN(price))
-      throw { message: `Invalid parameters - 'price' is not a number` };
+    if (!quantidade)
+      throw { message: `Invalid parameters - 'quantidade' is required` };
+
+    if (!total) throw { message: `Invalid parameters - 'total' is required` };
+
+    total = parseFloat(total);
+
+    if (isNaN(total))
+      throw { message: `Invalid parameters - 'total' is not a number` };
 
     const payload = {
-      description,
-      price,
+      cliente,
+      produto,
+      quantidade,
+      total,
     };
 
-    const newvenda = await venda.create(payload);
+    const novaVenda = await venda.create(payload);
 
-    response.json({ success: true, data: newvenda, error: null });
+    response.json({ success: true, data: novaVenda, error: null });
   } catch (error) {
     response.status(500).json({ success: false, data: null, error });
   }

@@ -43,14 +43,10 @@ async function getAll() {
     for (const product of json.data) {
       rows += `
         <tr>
-          <td class="description">${product.description}</td>
-          <td class="price">${parseFloat(product.price).toFixed(2)}</td>
-          <td class="options">
-            <button onclick="update('${product._id}', '${
-        product.description
-      }', ${product.price})">Edit</button>
-            <button onclick="remove('${product._id}')">Delete</button>
-          </td>
+          <td class="cliente">${product.cliente}</td>
+          <td class="produto">${product.produto}</td>
+          <td class="quantidade">${parseInt(product.quantidade)}</td>
+          <td class="total">${parseInt(product.total).toFixed(2)}</td>
         </tr>
       `;
     }
@@ -125,7 +121,8 @@ async function submitForm(event) {
   try {
     // Getting form and inputs
     const form = document.querySelector("form"),
-      inputs = Array.from(form.querySelectorAll("input"));
+      inputs = Array.from(form.querySelectorAll("input")),
+      selects = Array.from(form.querySelectorAll("select"));
 
     // Create product object payload
     const product = {};
@@ -133,6 +130,11 @@ async function submitForm(event) {
     // Setting product payload properties
     for (const input of inputs) {
       product[input.name] = input.value;
+    }
+
+    // Setting product payload properties
+    for (const select of selects) {
+      product[select.name] = select.value;
     }
 
     // Mount request options
@@ -170,6 +172,80 @@ async function submitForm(event) {
   }
 }
 
+// Getting all clientes and update table
+async function getAllClientes() {
+  try {
+    // Getting form and table HTML elements
+    const select = document.body.querySelector("#venda_cliente");
+
+    // Mount URL Request
+    let urlRequest = `${location.origin}/api/cliente`;
+
+    // Making request
+    const response = await fetch(urlRequest);
+    // Extract JSON
+    const json = await response.json();
+
+    // Verify if request has error
+    if (!json.success) throw json.error;
+
+    // Clean table rows
+    select.innerHTML = `<option value="" selected>Selecione um cliente</option>`;
+
+    // Mounting table rows
+    let rows = select.innerHTML;
+    for (const cliente of json.data) {
+      rows += `
+        <option value="${cliente.nome}">
+        ${cliente.nome}
+        </option>
+      `;
+    }
+
+    // Mounting table rows
+    select.innerHTML = rows;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// Getting all produto and update table
+async function getAllProdutos() {
+  try {
+    // Getting form and table HTML elements
+    const select = document.body.querySelector("#venda_produto");
+
+    // Mount URL Request
+    let urlRequest = `${location.origin}/api/produto`;
+
+    // Making request
+    const response = await fetch(urlRequest);
+    // Extract JSON
+    const json = await response.json();
+
+    // Verify if request has error
+    if (!json.success) throw json.error;
+
+    // Clean table rows
+    select.innerHTML = `<option value="" selected>Selecione um produto</option>`;
+
+    // Mounting table rows
+    let rows = select.innerHTML;
+    for (const produto of json.data) {
+      rows += `
+        <option value="${produto.description}" data-price="${produto.price}">
+        ${produto.description} (R$ ${parseFloat(produto.price).toFixed(2)})
+        </option>
+      `;
+    }
+
+    // Mounting table rows
+    select.innerHTML = rows;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 function cancelUpdate() {
   // Getting cancel update button and form HTML elements
   const button = document.querySelector("#cancel_update"),
@@ -191,3 +267,17 @@ const form = document.body.querySelector("form");
 form.addEventListener("submit", submitForm);
 // Update table rows
 getAll();
+getAllClientes();
+getAllProdutos();
+
+// evento para atualizar o valor total da compra
+document
+  .querySelector("#venda_quantidade")
+  .addEventListener("change", function (event) {
+    const quantidade = event.target.value;
+
+    const valor = document.querySelector("#venda_produto").selectedOptions[0]
+      .dataset.price;
+
+    document.querySelector("#venda_total").value = quantidade * valor;
+  });
