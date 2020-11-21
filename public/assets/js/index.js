@@ -47,8 +47,8 @@ async function getAll() {
           <td class="description">${product.description}</td>
           <td class="price">${parseFloat(product.price).toFixed(2)}</td>
           <td class="options">
-            <button onclick="update('${product._id}', '${product.description}', ${product.price})">Edit</button>
-            <button onclick="remove('${product._id}')">Delete</button>
+            <button onclick="update('${product._id}', '${product.description}', ${product.price})">Editar</button>
+            <button onclick="remove('${product._id}')">Deletar</button>
           </td>
         </tr>
       `

@@ -48,8 +48,8 @@ async function getAll() {
           <td class="options">
             <button onclick="update('${product._id}', '${
         product.description
-      }', ${product.price})">Edit</button>
-            <button onclick="remove('${product._id}')">Delete</button>
+      }', ${product.price})">Editar</button>
+            <button onclick="remove('${product._id}')">Deletar</button>
           </td>
         </tr>
       `;
@@ -92,7 +92,7 @@ function update(_id, description, price) {
 async function remove(id) {
   try {
     // Confirm delete
-    if (confirm("Confirm Delete?")) {
+    if (confirm("Confirmar o delete?")) {
       // Mount request options
       const options = {
         method: "DELETE",

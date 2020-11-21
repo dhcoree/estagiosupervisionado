@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Basic CRUD</title>
+    <title>Produto</title>
 
     <link rel="stylesheet" href="public/assets/css/style.css" />
   </head>
@@ -23,7 +23,7 @@
       <form>
         <div>
           <div>
-            <label for="product_description">Description</label>
+            <label for="product_description">Descrição</label>
           </div>
           <div>
             <input
@@ -36,7 +36,7 @@
         </div>
         <div>
           <div>
-            <label for="product_id">Price</label>
+            <label for="product_id">Preço</label>
           </div>
           <div>
             <input
@@ -49,8 +49,8 @@
           </div>
         </div>
         <div>
-          <button type="button" onclick="getAll()">Search</button>
-          <button type="submit">Save</button>
+          <button type="button" onclick="getAll()">Pesquisar</button>
+          <button type="submit">Salvar</button>
           <button
             id="cancel_update"
             type="button"
@@ -64,9 +64,9 @@
 
       <table>
         <thead>
-          <th class="description">Description</th>
-          <th class="price">Price</th>
-          <th class="options">Options</th>
+          <th class="description">Descrição</th>
+          <th class="price">Preço</th>
+          <th class="opcoes">Opções</th>
         </thead>
         <tbody></tbody>
       </table>

@@ -16,9 +16,9 @@ route.get("/", async (request, response) => {
       payload["_id"] = _id;
     }
 
-    if (description) {
+    /*if (description) {
       payload["description"] = description;
-    }
+    }*/
 
     if (price) {
       price = parseFloat(price);
@@ -30,6 +30,14 @@ route.get("/", async (request, response) => {
     }
 
     const products = await product.read(payload);
+
+    products = products.filter((product) => {
+      if (product.description.indexOf(description) != -1) {
+        return true;
+      }
+
+      return false;
+    });
 
     response.json({ success: true, data: products, error: null });
   } catch (error) {

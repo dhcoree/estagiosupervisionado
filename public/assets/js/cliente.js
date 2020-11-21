@@ -48,8 +48,8 @@ async function getAll() {
           <td class="options">
             <button onclick="update('${cliente._id}', '${cliente.nome}', ${
         cliente.idade
-      })">Edit</button>
-            <button onclick="remove('${cliente._id}')">Delete</button>
+      })">Editar</button>
+            <button onclick="remove('${cliente._id}')">Deletar</button>
           </td>
         </tr>
       `;
