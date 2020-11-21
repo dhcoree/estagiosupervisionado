@@ -15,22 +15,30 @@ async function getAll() {
     // Verify if request has error
     if (!json.success) throw json.error;
 
+    const tbody = document.body.querySelector("tbody");
+
     // Clean table rows
     tbody.innerHTML = "";
 
     // Mounting table rows
     let rows = "";
+    const styles = "px-6 py-4 whitespace-nowrap text-sm text-gray-500";
+
+    const moneyFormatter = (total) => {
+      return Intl.NumberFormat("pt-br", {
+        style: "currency",
+        currency: "BRL",
+      }).format(parseInt(total).toFixed(2));
+    };
+
     for (const sale of json.data) {
       rows += `
         <tr>
-          <td class="description">${product.description}</td>
-          <td class="price">${parseFloat(product.price).toFixed(2)}</td>
-          <td class="options">
-            <button onclick="update('${product._id}', '${
-        product.description
-      }', ${product.price})">Editar</button>
-            <button onclick="remove('${product._id}')">Deletar</button>
-          </td>
+        
+          <td class="${styles}">${sale.cliente}</td>
+          <td class="${styles}">${sale.produto}</td>
+          <td class="${styles}">${parseInt(sale.quantidade)}</td>
+          <td class="${styles}">${moneyFormatter(sale.total)}</td>
         </tr>
       `;
     }
@@ -165,9 +173,9 @@ function cancelUpdate() {
 }
 
 // Getting form
-const form = document.body.querySelector("form");
+// const form = document.body.querySelector("form");
 
 // Add submit event to form
-form.addEventListener("submit", submitForm);
+// form.addEventListener("submit", submitForm);
 // Update table rows
 getAll();
