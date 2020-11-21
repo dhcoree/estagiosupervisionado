@@ -40,16 +40,20 @@ async function getAll() {
 
     // Mounting table rows
     let rows = "";
+    const styles = "px-6 py-4 whitespace-nowrap text-sm text-gray-500";
+
     for (const cliente of json.data) {
       rows += `
         <tr>
-          <td class="nome">${cliente.nome}</td>
-          <td class="idade">${parseInt(cliente.idade)}</td>
-          <td class="options">
+          <td class="${styles}">${cliente.nome}</td>
+          <td class="${styles}">${parseInt(cliente.idade)}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
             <button onclick="update('${cliente._id}', '${cliente.nome}', ${
         cliente.idade
-      })">Editar</button>
-            <button onclick="remove('${cliente._id}')">Deletar</button>
+      })" class="text-indigo-600 hover:text-indigo-900">Editar</button>
+            <button onclick="remove('${
+              cliente._id
+            }')" class="text-indigo-600 hover:text-indigo-900">Deletar</button>
           </td>
         </tr>
       `;
