@@ -29,7 +29,7 @@ route.get("/", async (request, response) => {
       payload["price"] = price;
     }
 
-    const products = await product.read(payload);
+    let products = await product.read(payload);
 
     products = products.filter((product) => {
       if (product.description.indexOf(description) != -1) {
@@ -41,6 +41,7 @@ route.get("/", async (request, response) => {
 
     response.json({ success: true, data: products, error: null });
   } catch (error) {
+    console.log(error);
     response.status(500).json({ success: false, data: [], error });
   }
 });
