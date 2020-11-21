@@ -43,6 +43,11 @@ app.get("/produto", (request, response) => {
   response.sendFile(path.resolve(__dirname, "public/produto.html"));
 });
 
+// Cliente page
+app.get("/estoque", (request, response) => {
+  response.sendFile(path.resolve(__dirname, "public/estoque.html"));
+});
+
 // Vendas page
 app.get("/venda", (request, response) => {
   response.sendFile(path.resolve(__dirname, "public/venda.html"));

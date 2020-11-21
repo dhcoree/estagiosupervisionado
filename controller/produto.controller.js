@@ -4,6 +4,7 @@ const express = require("express"),
 
 // Import Product Model
 const product = require("./../model/produto.model");
+const estoque = require("./../model/estoque.model");
 
 // Setting GET path
 route.get("/", async (request, response) => {
@@ -29,17 +30,35 @@ route.get("/", async (request, response) => {
       payload["price"] = price;
     }
 
-    let products = await product.read(payload);
+    let produtos = await product.read(payload);
 
-    products = products.filter((product) => {
-      if (product.description.indexOf(description) != -1) {
-        return true;
-      }
+    if (description) {
+      produtos = produtos.filter((product) => {
+        if (product.description.indexOf(description) != -1) {
+          return true;
+        }
 
-      return false;
-    });
+        return false;
+      });
+    }
 
-    response.json({ success: true, data: products, error: null });
+    produtos = await Promise.all(
+      produtos.map(async (produto) => {
+        const estoques = await estoque.read({
+          produto: produto.description,
+        });
+
+        produto.quantidade = estoques.reduce((a, b) => {
+          return b.tipo === "Entrada"
+            ? a + Number(b.quantidade)
+            : a - Number(b.quantidade);
+        }, 0);
+
+        return produto;
+      })
+    );
+
+    response.json({ success: true, data: produtos, error: null });
   } catch (error) {
     console.log(error);
     response.status(500).json({ success: false, data: [], error });
@@ -49,17 +68,24 @@ route.get("/", async (request, response) => {
 // Setting POST path
 route.post("/", async (request, response) => {
   try {
-    let { description, price } =
+    let { description, price, quantidade } =
       typeof request.body == "string" ? JSON.parse(request.body) : request.body;
 
     if (!description)
       throw { message: `Invalid parameters - 'description' is required` };
+
     if (!price) throw { message: `Invalid parameters - 'price' is required` };
+
+    if (!quantidade)
+      throw { message: `Invalid parameters - 'quantidade' is required` };
 
     price = parseFloat(price);
 
     if (isNaN(price))
       throw { message: `Invalid parameters - 'price' is not a number` };
+
+    if (isNaN(quantidade))
+      throw { message: `Invalid parameters - 'quantidade' is not a number` };
 
     const payload = {
       description,
@@ -68,8 +94,18 @@ route.post("/", async (request, response) => {
 
     const newProduct = await product.create(payload);
 
+    if (newProduct) {
+      await estoque.create({
+        produto: newProduct.description,
+        quantidade,
+        tipo: "Entrada",
+        dataInclusao: new Date().toLocaleString(),
+      });
+    }
+
     response.json({ success: true, data: newProduct, error: null });
   } catch (error) {
+    console.log(error);
     response.status(500).json({ success: false, data: null, error });
   }
 });
@@ -113,10 +149,27 @@ route.delete("/:_id", async (request, response) => {
 
     if (!_id) throw { message: "Invalid parameters" };
 
+    const [produtoAtual] = await product.read(request.params);
+
+    console.log(produtoAtual);
+
+    const estoques = await estoque.read({
+      produto: produtoAtual.description,
+    });
+
+    console.log(estoques);
+
     const numRemoved = await product.delete(_id);
+
+    await Promise.all(
+      estoques.map(async (_estoque) => {
+        await estoque.delete(_estoque._id);
+      })
+    );
 
     response.json({ success: true, data: numRemoved, error: null });
   } catch (error) {
+    console.log(error);
     response.status(500).json({ success: false, data: 0, error });
   }
 });

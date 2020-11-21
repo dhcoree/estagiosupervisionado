@@ -4,6 +4,7 @@ const express = require("express"),
 
 // Import venda Model
 const venda = require("./../model/venda.model");
+const estoque = require("./../model/estoque.model");
 
 // Setting GET path
 route.get("/", async (request, response) => {
@@ -77,9 +78,37 @@ route.post("/", async (request, response) => {
       produto,
       quantidade,
       total,
+      dataInclusao: new Date().toLocaleDateString(),
     };
 
+    const estoques = await estoque.read({
+      produto,
+    });
+
+    const estoqueAtual = estoques.reduce((a, b) => {
+      return b.tipo === "Entrada"
+        ? a + Number(b.quantidade)
+        : a - Number(b.quantidade);
+    }, 0);
+
+    if (estoqueAtual < quantidade) {
+      throw new Error("quantidade insuficiente no estoque");
+    }
+
     const novaVenda = await venda.create(payload);
+
+    if (novaVenda) {
+      estoque.create({
+        produto,
+        quantidade,
+        tipo: "Saida",
+        dataInclusao: new Date().toLocaleString(),
+      });
+    }
+
+    if (produto) {
+      payload["produto"] = produto;
+    }
 
     response.json({ success: true, data: novaVenda, error: null });
   } catch (error) {

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Estagio Supervisionado - Cadastro de produtos</title>
+    <title>Estagio Supervisionado - Estoques</title>
 
     <link
       href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
@@ -23,7 +23,7 @@
           >
             <div class="flex justify-start">
               <a href="/">
-                Cadastro de produtos
+                Estagio Supervisionado
                 <!-- <span class="sr-only">Estagio Supervisionado</span>
                 <img
                   class="h-8 w-auto sm:h-10"
@@ -79,7 +79,7 @@
       <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
           <h1 class="text-3xl font-bold leading-tight text-gray-900">
-            Cadastro de produtos
+            Estoque
           </h1>
         </div>
       </header>
@@ -92,38 +92,22 @@
                 <div class="grid grid-cols-6 gap-6">
                   <div class="col-span-6 sm:col-span-3">
                     <label
-                      for="product_description"
+                      for="estoque_produto"
                       class="block text-sm font-medium text-gray-700"
-                      >Descrição</label
+                      >Produto</label
                     >
-                    <input
-                      required
-                      type="text"
-                      name="description"
-                      id="product_description"
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 p-2"
-                    />
+                    <select
+                      id="estoque_produto"
+                      name="produto"
+                      class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    >
+                      <option value="" selected>Selecione um produto</option>
+                    </select>
                   </div>
 
                   <div class="col-span-6 sm:col-span-3">
                     <label
-                      for="product_price"
-                      class="block text-sm font-medium text-gray-700"
-                      >Preço</label
-                    >
-                    <input
-                      name="price"
-                      required
-                      type="number"
-                      step="0.01"
-                      id="product_price"
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 p-2"
-                    />
-                  </div>
-
-                  <div class="col-span-6 sm:col-span-3">
-                    <label
-                      for="product_quantidade"
+                      for="estoque_quantidade"
                       class="block text-sm font-medium text-gray-700"
                       >Quantidade</label
                     >
@@ -132,14 +116,12 @@
                       required
                       type="number"
                       step="1"
-                      min="1"
-                      id="product_quantidade"
+                      id="estoque_quantidade"
                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 p-2"
                     />
                   </div>
                 </div>
               </div>
-
               <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
                 <button
                   type="button"
@@ -186,26 +168,32 @@
                               scope="col"
                               class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Descrição
+                              Produto
                             </th>
                             <th
                               scope="col"
                               class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Preço
+                              Quantidade
                             </th>
                             <th
                               scope="col"
                               class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                              Quantidade em estoque restante
+                              Tipo
                             </th>
                             <th
+                              scope="col"
+                              class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Data
+                            </th>
+                            <!-- <th
                               scope="col"
                               class="px-6 py-3 bg-gray-50 text-right"
                             >
                               Ações
-                            </th>
+                            </th> -->
                           </tr>
                         </thead>
                         <tbody
@@ -224,5 +212,5 @@
     </div>
   </body>
 
-  <script src="/public/assets/js/produto.js"></script>
+  <script src="/public/assets/js/estoque.js"></script>
 </html>

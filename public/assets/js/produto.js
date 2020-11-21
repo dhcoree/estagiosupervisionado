@@ -38,18 +38,31 @@ async function getAll() {
     // Clean table rows
     tbody.innerHTML = "";
 
+    const moneyFormatter = (total) => {
+      return Intl.NumberFormat("pt-br", {
+        style: "currency",
+        currency: "BRL",
+      }).format(parseInt(total).toFixed(2));
+    };
+
     // Mounting table rows
     let rows = "";
+    const styles = "px-6 py-4 whitespace-nowrap text-sm text-gray-500";
     for (const product of json.data) {
       rows += `
         <tr>
-          <td class="description">${product.description}</td>
-          <td class="price">${parseFloat(product.price).toFixed(2)}</td>
-          <td class="options">
+          <td class="${styles}">${product.description}</td>
+          <td class="${styles}">${moneyFormatter(product.price)}</td>
+          <td class="${styles}">${product.quantidade}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
             <button onclick="update('${product._id}', '${
         product.description
-      }', ${product.price})">Editar</button>
-            <button onclick="remove('${product._id}')">Deletar</button>
+      }', ${
+        product.price
+      })" class="text-indigo-600 hover:text-indigo-900">Editar</button>
+            <button onclick="remove('${
+              product._id
+            }')" class="text-indigo-600 hover:text-indigo-900">Deletar</button>
           </td>
         </tr>
       `;

@@ -6,11 +6,13 @@ const express = require("express"),
 const cliente = require("./controller/cliente.controller");
 const produto = require("./controller/produto.controller");
 const venda = require("./controller/venda.controller");
+const estoque = require("./controller/estoque.controller");
 
 // Setting route paths
 route.use("/cliente", cliente);
 route.use("/produto", produto);
 route.use("/venda", venda);
+route.use("/estoque", estoque);
 
 route.use("*", (request, response) => {
   response.status(404).json({ success: false, message: "Not found" });

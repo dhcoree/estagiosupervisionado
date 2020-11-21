@@ -1,31 +1,14 @@
 // Setting temporary variable
 let toUpdate = null;
 
-// Getting all products and update table
+// Getting all estoques and update table
 async function getAll() {
   try {
     // Getting form and table HTML elements
-    const form = document.body.querySelector("form"),
-      tbody = document.body.querySelector("tbody");
-
-    // Getting form inputs
-    const inputs = Array.from(form.querySelectorAll("input"));
-
-    // Create product payload for request
-    const product = {};
+    const tbody = document.body.querySelector("tbody");
 
     // Mount URL Request
-    let urlRequest = `${location.origin}/api/venda`;
-    // Variable to verify if is first loop
-    let first = true;
-
-    // Get all inputs vlaues and adding to URL Request query
-    for (const input of inputs) {
-      if (first) urlRequest += `?${input.name}=${input.value}`;
-      else urlRequest += `&${input.name}=${input.value}`;
-
-      first = false;
-    }
+    let urlRequest = `${location.origin}/api/estoque`;
 
     // Making request
     const response = await fetch(urlRequest);
@@ -35,25 +18,19 @@ async function getAll() {
     // Verify if request has error
     if (!json.success) throw json.error;
 
-    const moneyFormatter = (total) => {
-      return Intl.NumberFormat("pt-br", {
-        style: "currency",
-        currency: "BRL",
-      }).format(parseInt(total).toFixed(2));
-    };
-
     // Clean table rows
     tbody.innerHTML = "";
 
     // Mounting table rows
     let rows = "";
-    for (const product of json.data) {
+    const styles = "px-6 py-4 whitespace-nowrap text-sm text-gray-500";
+    for (const estoque of json.data) {
       rows += `
         <tr>
-          <td class="cliente">${product.cliente}</td>
-          <td class="produto">${product.produto}</td>
-          <td class="quantidade">${parseInt(product.quantidade)}</td>
-          <td class="total">${moneyFormatter(product.total)}</td>
+          <td class="${styles}">${estoque.produto}</td>
+          <td class="${styles}">${parseInt(estoque.quantidade)}</td>
+          <td class="${styles}">${estoque.tipo}</td>
+          <td class="${styles}">${estoque.dataInclusao}</td>
         </tr>
       `;
     }
@@ -65,7 +42,7 @@ async function getAll() {
   }
 }
 
-// Set product to update
+// Set estoque to update
 function update(_id, description, price) {
   // Getting Cancel Update button
   const button = document.querySelector("#cancel_update");
@@ -73,7 +50,7 @@ function update(_id, description, price) {
   // Remove hide button CSS class
   button.classList.remove("hidden");
 
-  // Saving product to temporary variable
+  // Saving estoque to temporary variable
   toUpdate = {
     _id,
     description,
@@ -91,7 +68,7 @@ function update(_id, description, price) {
   }
 }
 
-// Delete product
+// Delete estoque
 async function remove(id) {
   try {
     // Confirm delete
@@ -103,7 +80,7 @@ async function remove(id) {
 
       // Making request and getting json
       const response = await fetch(
-          `${location.origin}/api/venda/${id}`,
+          `${location.origin}/api/estoque/${id}`,
           options
         ),
         json = await response.json();
@@ -131,17 +108,17 @@ async function submitForm(event) {
       inputs = Array.from(form.querySelectorAll("input")),
       selects = Array.from(form.querySelectorAll("select"));
 
-    // Create product object payload
-    const product = {};
+    // Create estoque object payload
+    const estoque = {};
 
-    // Setting product payload properties
+    // Setting estoque payload properties
     for (const input of inputs) {
-      product[input.name] = input.value;
+      estoque[input.name] = input.value;
     }
 
-    // Setting product payload properties
+    // Setting estoque payload properties
     for (const select of selects) {
-      product[select.name] = select.value;
+      estoque[select.name] = select.value;
     }
 
     // Mount request options
@@ -150,11 +127,11 @@ async function submitForm(event) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(product),
+      body: JSON.stringify(estoque),
     };
 
     // Create URL Request
-    let urlRequest = `${location.origin}/api/venda`;
+    let urlRequest = `${location.origin}/api/estoque`;
 
     // Verify if it is update
     if (toUpdate) urlRequest += `/${toUpdate._id}`;
@@ -220,7 +197,7 @@ async function getAllClientes() {
 async function getAllProdutos() {
   try {
     // Getting form and table HTML elements
-    const select = document.body.querySelector("#venda_produto");
+    const select = document.body.querySelector("#estoque_produto");
 
     // Mount URL Request
     let urlRequest = `${location.origin}/api/produto`;
