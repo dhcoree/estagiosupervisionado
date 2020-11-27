@@ -57,8 +57,8 @@ async function getAll() {
           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
             <button onclick="update('${product._id}', '${
         product.description
-      }', ${
-        product.price
+      }', ${product.price}, ${
+        product.quantidade
       })" class="text-indigo-600 hover:text-indigo-900">Editar</button>
             <button onclick="remove('${
               product._id
@@ -76,7 +76,7 @@ async function getAll() {
 }
 
 // Set product to update
-function update(_id, description, price) {
+function update(_id, description, price, quantidade) {
   // Getting Cancel Update button
   const button = document.querySelector("#cancel_update");
 
@@ -88,6 +88,7 @@ function update(_id, description, price) {
     _id,
     description,
     price,
+    quantidade,
   };
 
   // Getting form and inputs
@@ -98,6 +99,7 @@ function update(_id, description, price) {
   for (const input of inputs) {
     if (input.name == "description") input.value = description;
     else if (input.name == "price") input.value = parseFloat(price);
+    else if (input.name == "quantidade") input.value = parseFloat(quantidade);
   }
 }
 

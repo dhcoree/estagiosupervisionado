@@ -12,91 +12,217 @@
     <link rel="stylesheet" href="public/assets/css/style.css" />
   </head>
   <body>
-    <div class="main">
-      <h1>Vendas</h1>
-
-      <nav>
-        <ul>
-          <li><a href="/">Inicio</a></li>
-          <li><a href="/cliente">Clientes</a></li>
-          <li><a href="/produto">Produtos</a></li>
-          <li><a href="/venda">Vendas</a></li>
-        </ul>
-      </nav>
-
-      <form>
-        <div>
-          <div>
-            <label for="venda_cliente">Cliente</label>
-          </div>
-          <div>
-            <select id="venda_cliente" name="cliente" required>
-              <option value="" selected>Selecione um cliente</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <div>
-            <label for="venda_produto">Produto</label>
-          </div>
-          <div>
-            <select id="venda_produto" name="produto" required>
-              <option value="" selected>Selecione um produto</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <div>
-            <label for="venda_quantidade">Quantidade</label>
-          </div>
-          <div>
-            <input
-              id="venda_quantidade"
-              name="quantidade"
-              type="number"
-              step="1"
-              required
-            />
-          </div>
-        </div>
-        <div>
-          <div>
-            <label for="venda_total">Total</label>
-          </div>
-          <div>
-            <input
-              id="venda_total"
-              name="total"
-              type="number"
-              step="0.01"
-              required
-              readonly
-            />
-          </div>
-        </div>
-        <div>
-          <button type="button" onclick="getAll()">Search</button>
-          <button type="submit">Save</button>
-          <button
-            id="cancel_update"
-            type="button"
-            class="hidden"
-            onclick="cancelUpdate()"
+    <div>
+      <!-- This example requires Tailwind CSS v2.0+ -->
+      <div class="relative bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+          <div
+            class="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10"
           >
-            Cancel
-          </button>
-        </div>
-      </form>
+            <div class="flex justify-start">
+              <a href="/">
+                Vendas
+                <!-- <span class="sr-only">Estagio Supervisionado</span>
+                <img
+                  class="h-8 w-auto sm:h-10"
+                  src="/logo.png"
+                  alt=""
+                /> -->
+              </a>
+            </div>
 
-      <table>
-        <thead>
-          <th class="cliente">Cliente</th>
-          <th class="produto">Produto</th>
-          <th class="quantidade">Quantidade</th>
-          <th class="total">Total</th>
-        </thead>
-        <tbody></tbody>
-      </table>
+            <nav>
+              <ul class="flex space-x-10">
+                <li>
+                  <a
+                    class="text-base font-medium text-gray-500 hover:text-gray-900"
+                    href="/"
+                    >Inicio</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="text-base font-medium text-gray-500 hover:text-gray-900"
+                    href="/cliente"
+                    >Clientes</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="text-base font-medium text-gray-500 hover:text-gray-900"
+                    href="/produto"
+                    >Produtos</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="text-base font-medium text-gray-500 hover:text-gray-900"
+                    href="/estoque"
+                    >Estoque</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="text-base font-medium text-gray-500 hover:text-gray-900"
+                    href="/venda"
+                    >Vendas</a
+                  >
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <header class="bg-white shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+          <h1 class="text-3xl font-bold leading-tight text-gray-900">Vendas</h1>
+        </div>
+      </header>
+
+      <main>
+        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+          <form>
+            <div class="shadow overflow-hidden sm:rounded-md">
+              <div class="px-4 py-5 bg-white sm:p-6">
+                <div class="grid grid-cols-6 gap-6">
+                  <div class="col-span-6 sm:col-span-3">
+                    <label
+                      for="venda_cliente"
+                      class="block text-sm font-medium text-gray-700"
+                      >Cliente</label
+                    >
+                    <select id="venda_cliente" name="cliente" required>
+                      <option value="" selected>Selecione um Cliente</option>
+                    </select>
+                  </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label
+                      for="venda_produto"
+                      class="block text-sm font-medium text-gray-700"
+                      >Produto</label
+                    >
+                    <div>
+                      <select id="venda_produto" name="produto" required>
+                        <option value="" selected>Selecione um Cliente</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <label
+                      for="venda_quantidade"
+                      class="block text-sm font-medium text-gray-700"
+                      >Quantidade</label
+                    >
+                    <input
+                      id="venda_quantidade"
+                      name="quantidade"
+                      type="number"
+                      step="1"
+                      required
+                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 p-2"
+                    />
+                  </div>
+
+                  <div class="col-span-6 sm:col-span-3">
+                    <label
+                      for="venda_total"
+                      class="block text-sm font-medium text-gray-700"
+                      >Total</label
+                    >
+                    <input
+                      id="venda_total"
+                      name="total"
+                      type="number"
+                      step="0.01"
+                      required
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                <button
+                  type="button"
+                  onclick="getAll()"
+                  class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Pesquisar venda
+                </button>
+                <button
+                  type="submit"
+                  class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Finalizar venda
+                </button>
+                <button
+                  id="cancel_update"
+                  onclick="cancelUpdate()"
+                  type="button"
+                  class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Replace with your content -->
+          <div class="px-4 py-6 sm:px-0">
+            <div
+              class="border-4 border-dashed border-gray-200 rounded-lg h-auto"
+            >
+              <div class="flex flex-col">
+                <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                  <div
+                    class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
+                  >
+                    <div
+                      class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
+                    >
+                      <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                          <tr>
+                            <th
+                              scope="col"
+                              class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Cliente
+                            </th>
+                            <th
+                              scope="col"
+                              class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Produto
+                            </th>
+                            <th
+                              scope="col"
+                              class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Quantidade
+                            </th>
+                            <th
+                              scope="col"
+                              class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                            >
+                              Total
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody
+                          class="bg-white divide-y divide-gray-200"
+                        ></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /End replace -->
+        </div>
+      </main>
     </div>
   </body>
 

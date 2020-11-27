@@ -114,7 +114,7 @@ route.post("/", async (request, response) => {
 route.put("/:_id", async (request, response) => {
   try {
     let { _id } = request.params,
-      { description, price } =
+      { description, price, quantidade } =
         typeof request.body == "string"
           ? JSON.parse(request.body)
           : request.body;
@@ -135,7 +135,12 @@ route.put("/:_id", async (request, response) => {
     };
 
     const numReplaced = await product.update(_id, payload);
-
+    await estoque.create({
+      produto: description,
+      quantidade,
+      tipo: "Entrada",
+      dataInclusao: new Date().toLocaleString(),
+    });
     response.json({ success: true, data: numReplaced, error: null });
   } catch (error) {
     response.status(500).json({ success: false, data: 0, error });

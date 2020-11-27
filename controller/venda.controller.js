@@ -92,7 +92,7 @@ route.post("/", async (request, response) => {
     }, 0);
 
     if (estoqueAtual < quantidade) {
-      throw new Error("quantidade insuficiente no estoque");
+      throw { message: `Quantidade fora de estoque!` };
     }
 
     const novaVenda = await venda.create(payload);

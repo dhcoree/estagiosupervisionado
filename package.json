@@ -18,7 +18,7 @@
     "nodemon": "^2.0.4"
   },
   "repository": "https://github.com/userjapa/basic-crud.git",
-  "author": "userJapa",
+  "author": "DH",
   "license": "MIT",
   "private": false
 }
