@@ -59,6 +59,13 @@
                 <li>
                   <a
                     class="text-base font-medium text-gray-500 hover:text-gray-900"
+                    href="/estoque"
+                    >Estoque</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="text-base font-medium text-gray-500 hover:text-gray-900"
                     href="/venda"
                     >Vendas</a
                   >
@@ -135,7 +142,15 @@
                   type="button"
                   class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  Cancelar
+                  Limpar
+                </button>
+                <button
+                  id="make_report"
+                  onclick="makeReport()"
+                  type="button"
+                  class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Relatório
                 </button>
               </div>
             </div>
@@ -154,7 +169,10 @@
                     <div
                       class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
                     >
-                      <table class="min-w-full divide-y divide-gray-200">
+                      <table
+                        class="min-w-full divide-y divide-gray-200"
+                        id="cliente_table"
+                      >
                         <thead>
                           <tr>
                             <th
@@ -171,7 +189,7 @@
                             </th>
                             <th
                               scope="col"
-                              class="px-6 py-3 bg-gray-50 text-right"
+                              class="px-6 py-3 bg-gray-50 text-right acoes"
                             >
                               Ações
                             </th>
