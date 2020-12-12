@@ -20,7 +20,7 @@ route.get("/", async (request, response) => {
 // Setting POST path
 route.post("/", async (request, response) => {
   try {
-    let { produto, quantidade } =
+    let { produto, quantidade, dataInclusao } =
       typeof request.body == "string" ? JSON.parse(request.body) : request.body;
 
     if (!produto)
@@ -35,6 +35,7 @@ route.post("/", async (request, response) => {
     const payload = {
       produto,
       quantidade,
+      dataInclusao,
       tipo: "Entrada",
     };
 

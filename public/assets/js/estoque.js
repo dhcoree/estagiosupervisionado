@@ -121,6 +121,8 @@ async function submitForm(event) {
       estoque[select.name] = select.value;
     }
 
+    estoque["dataInclusao"] = new Date().toLocaleString();
+
     // Mount request options
     const options = {
       method: !toUpdate ? "POST" : "PUT",
