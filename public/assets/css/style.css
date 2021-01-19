@@ -20,10 +20,10 @@ body {
 
 .main form #cancel_update.hidden {
   display: none;
-  /* height: 0;
+  height: 0;
   padding: 0;
   border: none;
-  color: white; */
+  color: white;
 }
 
 .main table {
