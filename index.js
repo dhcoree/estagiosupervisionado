@@ -53,6 +53,21 @@ app.get("/venda", (request, response) => {
   response.sendFile(path.resolve(__dirname, "public/venda.html"));
 });
 
+// pagina marca
+app.get("/marca", (request, response) => {
+  response.sendFile(path.resolve(__dirname, "public/marca.html"));
+});
+
+//pagina grupo
+app.get("/grupo", (request, response) => {
+  response.sendFile(path.resolve(__dirname, "public/grupo.html"));
+});
+
+//pagina fornecedor
+app.get("/fornecedor", (request, response) => {
+  response.sendFile(path.resolve(__dirname, "public/fornecedor.html"));
+});
+
 // Public path
 app.use("/public", express.static(path.join(__dirname, "public")));
 

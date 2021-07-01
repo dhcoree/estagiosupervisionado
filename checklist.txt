@@ -1,0 +1,29 @@
+-  copiar cadastro cliente para fazer entidades de (marca, grupo, fornecedor) 
+   -  duplicar pagina modell e controller  
+   -  alterar nome de cada um copiado
+   -  ajustar formulario e nome de campos
+   -  ajustar grid e nome de campos
+   -  ajustar controller/modell e nome dos campos
+   +  testar crud.
+   
+
+-  criar relacionamento de marca, grupo e fornecedor no cadastro do produto
+    - (nomeMarca, nomeGrupo, nomeFornecedor)
+    - criar campo formulario listagem marca, grupo e fornecedor
+    - exibir na grid as colunas novas
+    - controller e modell criar os campos/colunas
+    + testar
+
+
+-  Varios produtos na venda
+    - remover quantidade
+    - criar uma funação que toda vez que seleciona produto adicona na grid com campo de total apenas para esse produto
+    - permitir remover o produto adicionado e alterar a quantidade
+    - alterar total que existe para somar todos totais que existe na grid
+
+
+
+
+
+
+
