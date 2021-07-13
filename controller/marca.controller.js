@@ -1,95 +1,92 @@
 // Import and create route
-const express = require("express"),
-  route = express.Router();
+const express = require('express'),
+  route = express.Router()
 
 // Import marca Model
-const marca = require("../model/marca.model");
+const marca = require('../model/marca.model')
 
 // Setting GET path
-route.get("/", async (request, response) => {
+route.get('/', async (request, response) => {
   try {
-    
-    let { _id, nome} = request.query;
+    let { _id, nome } = request.query
 
-    const payload = {};
+    const payload = {}
 
     if (_id) {
-      payload["_id"] = _id;
+      payload['_id'] = _id
     }
 
     if (nome) {
-      payload["nome"] = nome;
+      payload['nome'] = nome
     }
 
+    const marcas = await marca.read(payload)
 
-    const marcas = await marca.read(payload);
-
-    response.json({ success: true, data: marcas, error: null });
+    response.json({ success: true, data: marcas, error: null })
   } catch (error) {
-    response.status(500).json({ success: false, data: [], error });
+    response.status(500).json({ success: false, data: [], error })
   }
-});
+})
 
 // Setting POST path
-route.post("/", async (request, response) => {
+route.post('/', async (request, response) => {
   try {
-    let { nome, } =
-      typeof request.body == "string" ? JSON.parse(request.body) : request.body;
+    let { nome } =
+      typeof request.body == 'string' ? JSON.parse(request.body) : request.body
 
-    if (!nome) throw { message: `Invalid parameters - 'nome' is required` };
-   
-    
+    if (!nome) throw { message: `Invalid parameters - 'nome' is required` }
+
     const payload = {
-      nome,
-    };
+      nome
+    }
 
-    const novomarca = await marca.create(payload);
+    const novomarca = await marca.create(payload)
 
-    response.json({ success: true, data: novomarca, error: null });
+    response.json({ success: true, data: novomarca, error: null })
   } catch (error) {
-    response.status(500).json({ success: false, data: null, error });
+    response.status(500).json({ success: false, data: null, error })
   }
-});
+})
 
 // Setting PUT path
-route.put("/:_id", async (request, response) => {
+route.put('/:_id', async (request, response) => {
   try {
     let { _id } = request.params,
-      { nome } =
-        typeof request.body == "string"
+      { nome, produtos } =
+        typeof request.body == 'string'
           ? JSON.parse(request.body)
-          : request.body;
+          : request.body
 
-    if (!_id) throw { message: `Invalid parameters - '_id' is required` };
-    if (!nome) throw { message: `Invalid parameters - 'nome' is required` };
-   
-    
+    if (!_id) throw { message: `Invalid parameters - '_id' is required` }
+    if (!nome) throw { message: `Invalid parameters - 'nome' is required` }
+
     const payload = {
       nome,
-    };
+      produtos
+    }
 
-    const numReplaced = await marca.update(_id, payload);
+    const numReplaced = await marca.update(_id, payload)
 
-    response.json({ success: true, data: numReplaced, error: null });
+    response.json({ success: true, data: numReplaced, error: null })
   } catch (error) {
-    response.status(500).json({ success: false, data: 0, error });
+    response.status(500).json({ success: false, data: 0, error })
   }
-});
+})
 
 // Setting DELETE path
-route.delete("/:_id", async (request, response) => {
+route.delete('/:_id', async (request, response) => {
   try {
-    const { _id } = request.params;
+    const { _id } = request.params
 
-    if (!_id) throw { message: "Invalid parameters" };
+    if (!_id) throw { message: 'Invalid parameters' }
 
-    const numRemoved = await marca.delete(_id);
+    const numRemoved = await marca.delete(_id)
 
-    response.json({ success: true, data: numRemoved, error: null });
+    response.json({ success: true, data: numRemoved, error: null })
   } catch (error) {
-    response.status(500).json({ success: false, data: 0, error });
+    response.status(500).json({ success: false, data: 0, error })
   }
-});
+})
 
 // Export route
-module.exports = route;
+module.exports = route

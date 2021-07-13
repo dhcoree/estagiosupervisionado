@@ -1,49 +1,49 @@
 // NeDB
-const Datastore = require("nedb");
+const Datastore = require('nedb')
 
-const path = require("path");
+const path = require('path')
 
 // Creating Store
-const productStore = new Datastore({
-  filename: path.resolve(__dirname, "./nedb/marca.db"),
-  autoload: true,
-});
+const marcaStore = new Datastore({
+  filename: path.resolve(__dirname, './nedb/marca.db'),
+  autoload: true
+})
 
 module.exports = {
-  create(product) {
+  create(marca) {
     return new Promise((resolve, reject) => {
-      productStore.insert(product, (error, newProduct) => {
-        if (error) return reject(error);
+      marcaStore.insert(marca, (error, newMarca) => {
+        if (error) return reject(error)
 
-        resolve(newProduct);
-      });
-    });
+        resolve(newMarca)
+      })
+    })
   },
-  read(product) {
+  read(marca) {
     return new Promise((resolve, reject) => {
-      productStore.find(product, (error, products) => {
-        if (error) return reject(error);
+      marcaStore.find(marca, (error, marcas) => {
+        if (error) return reject(error)
 
-        resolve(products);
-      });
-    });
+        resolve(marcas)
+      })
+    })
   },
-  update(_id, product) {
+  update(_id, marca) {
     return new Promise((resolve, reject) => {
-      productStore.update({ _id }, product, {}, (error, numReplaced) => {
-        if (error) return reject(error);
+      marcaStore.update({ _id }, marca, {}, (error, numReplaced) => {
+        if (error) return reject(error)
 
-        resolve(numReplaced);
-      });
-    });
+        resolve(numReplaced)
+      })
+    })
   },
   delete(_id) {
     return new Promise((resolve, reject) => {
-      productStore.remove({ _id }, {}, (error, numRemoved) => {
-        if (error) return reject(error);
+      marcaStore.remove({ _id }, {}, (error, numRemoved) => {
+        if (error) return reject(error)
 
-        resolve(numRemoved);
-      });
-    });
-  },
-};
+        resolve(numRemoved)
+      })
+    })
+  }
+}
