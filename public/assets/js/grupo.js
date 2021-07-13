@@ -46,14 +46,10 @@ async function getAll() {
       rows += `
         <tr>
           <td class="${styles}">${grupo.nome}</td>
-          <td class="${styles}">${parseInt(grupo.idade)}</td>
           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium acoes">
-            <button onclick="update('${grupo._id}', '${grupo.nome}', ${
-        grupo.idade
+            <button onclick="update('${grupo._id}', '${grupo.nome}'
       })" class="text-indigo-600 hover:text-indigo-900 ">Editar</button>
-            <button onclick="remove('${
-              grupo._id
-            }')" class="text-indigo-600 hover:text-indigo-900">Deletar</button>
+            <button onclick="remove('${grupo._id}')" class="text-indigo-600 hover:text-indigo-900">Deletar</button>
           </td>
         </tr>
       `;
@@ -67,7 +63,7 @@ async function getAll() {
 }
 
 // Set grupo to update
-function update(_id, nome, idade) {
+function update(_id, nome) {
   // Getting Cancel Update button
   const button = document.querySelector("#cancel_update");
 
@@ -78,7 +74,6 @@ function update(_id, nome, idade) {
   toUpdate = {
     _id,
     nome,
-    idade,
   };
 
   // Getting form and inputs
@@ -88,7 +83,6 @@ function update(_id, nome, idade) {
   // Setting input values
   for (const input of inputs) {
     if (input.name == "nome") input.value = nome;
-    else if (input.name == "idade") input.value = parseFloat(idade);
   }
 }
 

@@ -20,6 +20,7 @@
     - criar uma funação que toda vez que seleciona produto adicona na grid com campo de total apenas para esse produto
     - permitir remover o produto adicionado e alterar a quantidade
     - alterar total que existe para somar todos totais que existe na grid
+    + testar 
 
 
 

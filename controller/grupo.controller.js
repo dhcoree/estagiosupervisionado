@@ -8,7 +8,7 @@ const grupo = require("../model/grupo.model");
 // Setting GET path
 route.get("/", async (request, response) => {
   try {
-    let { _id, nome, idade } = request.query;
+    let { _id, nome } = request.query;
 
     const payload = {};
 
@@ -18,15 +18,6 @@ route.get("/", async (request, response) => {
 
     if (nome) {
       payload["nome"] = nome;
-    }
-
-    if (idade) {
-      idade = parseFloat(idade);
-
-      if (isNaN(idade))
-        throw { message: `Invalid parameters - 'idade' is not a number` };
-
-      payload["idade"] = idade;
     }
 
     const grupos = await grupo.read(payload);
@@ -40,26 +31,20 @@ route.get("/", async (request, response) => {
 // Setting POST path
 route.post("/", async (request, response) => {
   try {
-    let { nome, idade } =
+    let { nome } =
       typeof request.body == "string" ? JSON.parse(request.body) : request.body;
 
     if (!nome) throw { message: `Invalid parameters - 'nome' is required` };
-    if (!idade) throw { message: `Invalid parameters - 'idade' is required` };
-
-    idade = parseFloat(idade);
-
-    if (isNaN(idade))
-      throw { message: `Invalid parameters - 'idade' is not a number` };
 
     const payload = {
       nome,
-      idade,
     };
 
     const novogrupo = await grupo.create(payload);
 
     response.json({ success: true, data: novogrupo, error: null });
   } catch (error) {
+    console.log(error);
     response.status(500).json({ success: false, data: null, error });
   }
 });
@@ -68,23 +53,16 @@ route.post("/", async (request, response) => {
 route.put("/:_id", async (request, response) => {
   try {
     let { _id } = request.params,
-      { nome, idade } =
+      { nome } =
         typeof request.body == "string"
           ? JSON.parse(request.body)
           : request.body;
 
     if (!_id) throw { message: `Invalid parameters - '_id' is required` };
     if (!nome) throw { message: `Invalid parameters - 'nome' is required` };
-    if (!idade) throw { message: `Invalid parameters - 'idade' is required` };
-
-    idade = parseFloat(idade);
-
-    if (isNaN(idade))
-      throw { message: `Invalid parameters - 'idade' is not a number` };
 
     const payload = {
       nome,
-      idade,
     };
 
     const numReplaced = await grupo.update(_id, payload);
