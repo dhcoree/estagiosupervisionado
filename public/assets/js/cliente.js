@@ -46,14 +46,10 @@ async function getAll() {
       rows += `
         <tr>
           <td class="${styles}">${cliente.nome}</td>
-          <td class="${styles}">${parseInt(cliente.idade)}</td>
+          <td class="${styles}">${cliente.idade}</td>
           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium acoes">
-            <button onclick="update('${cliente._id}', '${cliente.nome}', ${
-        cliente.idade
-      })" class="text-indigo-600 hover:text-indigo-900 ">Editar</button>
-            <button onclick="remove('${
-              cliente._id
-            }')" class="text-indigo-600 hover:text-indigo-900">Deletar</button>
+            <button onclick="update('${cliente._id}', '${cliente.nome}', ${cliente.idade})" class="text-indigo-600 hover:text-indigo-900 ">Editar</button>
+            <button onclick="remove('${cliente._id}')" class="text-indigo-600 hover:text-indigo-900">Deletar</button>
           </td>
         </tr>
       `;
@@ -88,7 +84,7 @@ function update(_id, nome, idade) {
   // Setting input values
   for (const input of inputs) {
     if (input.name == "nome") input.value = nome;
-    else if (input.name == "idade") input.value = parseFloat(idade);
+    else if (input.name == "idade") input.value = idade;
   }
 }
 

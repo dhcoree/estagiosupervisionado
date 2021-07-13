@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Estagio Supervisionado - Estoques</title>
+    <title>Controle de Estoque DHL* - Estoques</title>
 
     <link
       href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
@@ -19,12 +19,19 @@
       <div class="relative bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
           <div
-            class="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10"
+            class="
+              flex
+              justify-between
+              items-center
+              border-b-2 border-gray-100
+              py-6
+              md:justify-start md:space-x-10
+            "
           >
             <div class="flex justify-start">
               <a href="/">
-                Estagio Supervisionado
-                <!-- <span class="sr-only">Estagio Supervisionado</span>
+                Controle de Estoque DHL*
+                <!-- <span class="sr-only">Controle de Estoque DHL*</span>
                 <img
                   class="h-8 w-auto sm:h-10"
                   src="/logo.png"
@@ -37,55 +44,96 @@
               <ul class="flex space-x-10">
                 <li>
                   <a
-                    class="text-base font-medium text-gray-500 hover:text-gray-900"
+                    class="
+                      text-base
+                      font-medium
+                      text-gray-500
+                      hover:text-gray-900
+                    "
                     href="/"
                     >Inicio</a
                   >
                 </li>
                 <li>
                   <a
-                    class="text-base font-medium text-gray-500 hover:text-gray-900"
+                    class="
+                      text-base
+                      font-medium
+                      text-gray-500
+                      hover:text-gray-900
+                    "
                     href="/cliente"
                     >Clientes</a
                   >
                 </li>
                 <li>
                   <a
-                    class="text-base font-medium text-gray-500 hover:text-gray-900"
+                    class="
+                      text-base
+                      font-medium
+                      text-gray-500
+                      hover:text-gray-900
+                    "
                     href="/produto"
                     >Produtos</a
                   >
                 </li>
                 <li>
                   <a
-                    class="text-base font-medium text-gray-500 hover:text-gray-900"
+                    class="
+                      text-base
+                      font-medium
+                      text-gray-500
+                      hover:text-gray-900
+                    "
                     href="/estoque"
                     >Estoque</a
                   >
                 </li>
                 <li>
                   <a
-                    class="text-base font-medium text-gray-500 hover:text-gray-900"
+                    class="
+                      text-base
+                      font-medium
+                      text-gray-500
+                      hover:text-gray-900
+                    "
                     href="/venda"
                     >Vendas</a
                   >
                 </li>
                 <li>
                   <a
-                    class="text-base font-medium text-gray-500 hover:text-gray-900"
+                    class="
+                      text-base
+                      font-medium
+                      text-gray-500
+                      hover:text-gray-900
+                    "
                     href="/fornecedor"
                     >Fornecedor</a
                   >
                 </li>
                 <li>
                   <a
-                    class="text-base font-medium text-gray-500 hover:text-gray-900"
+                    class="
+                      text-base
+                      font-medium
+                      text-gray-500
+                      hover:text-gray-900
+                    "
                     href="/grupo"
                     >Grupo</a
                   >
-                </li><li>
+                </li>
+                <li>
                   <a
-                    class="text-base font-medium text-gray-500 hover:text-gray-900"
+                    class="
+                      text-base
+                      font-medium
+                      text-gray-500
+                      hover:text-gray-900
+                    "
                     href="/marca"
                     >Marca</a
                   >
@@ -119,7 +167,22 @@
                     <select
                       id="estoque_produto"
                       name="produto"
-                      class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      aria-placeholder="informe o nome do produto"
+                      class="
+                        mt-1
+                        block
+                        w-full
+                        py-2
+                        px-3
+                        border border-gray-300
+                        bg-white
+                        rounded-md
+                        shadow-sm
+                        focus:outline-none
+                        focus:ring-indigo-500
+                        focus:border-indigo-500
+                        sm:text-sm
+                      "
                     >
                       <option value="" selected>Selecione um produto</option>
                     </select>
@@ -137,7 +200,17 @@
                       type="number"
                       step="1"
                       id="estoque_quantidade"
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 p-2"
+                      class="
+                        mt-1
+                        focus:ring-indigo-500 focus:border-indigo-500
+                        block
+                        w-full
+                        sm:text-sm
+                        border-gray-300
+                        rounded-md
+                        bg-gray-100
+                        p-2
+                      "
                     />
                   </div>
                 </div>
@@ -146,13 +219,47 @@
                 <button
                   type="button"
                   onclick="getAll()"
-                  class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  class="
+                    inline-flex
+                    justify-center
+                    py-2
+                    px-4
+                    border border-transparent
+                    shadow-sm
+                    text-sm
+                    font-medium
+                    rounded-md
+                    text-white
+                    bg-indigo-600
+                    hover:bg-indigo-700
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-offset-2
+                    focus:ring-indigo-500
+                  "
                 >
                   Pesquisar
                 </button>
                 <button
                   type="submit"
-                  class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  class="
+                    inline-flex
+                    justify-center
+                    py-2
+                    px-4
+                    border border-transparent
+                    shadow-sm
+                    text-sm
+                    font-medium
+                    rounded-md
+                    text-white
+                    bg-indigo-600
+                    hover:bg-indigo-700
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-offset-2
+                    focus:ring-indigo-500
+                  "
                 >
                   Salvar
                 </button>
@@ -160,7 +267,24 @@
                   id="cancel_update"
                   onclick="cancelUpdate()"
                   type="button"
-                  class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  class="
+                    inline-flex
+                    justify-center
+                    py-2
+                    px-4
+                    border border-transparent
+                    shadow-sm
+                    text-sm
+                    font-medium
+                    rounded-md
+                    text-white
+                    bg-indigo-600
+                    hover:bg-indigo-700
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-offset-2
+                    focus:ring-indigo-500
+                  "
                 >
                   Limpar
                 </button>
@@ -168,7 +292,24 @@
                   id="make_report"
                   onclick="makeReport()"
                   type="button"
-                  class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  class="
+                    inline-flex
+                    justify-center
+                    py-2
+                    px-4
+                    border border-transparent
+                    shadow-sm
+                    text-sm
+                    font-medium
+                    rounded-md
+                    text-white
+                    bg-indigo-600
+                    hover:bg-indigo-700
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-offset-2
+                    focus:ring-indigo-500
+                  "
                 >
                   Relatório
                 </button>
@@ -184,10 +325,22 @@
               <div class="flex flex-col">
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                   <div
-                    class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
+                    class="
+                      py-2
+                      align-middle
+                      inline-block
+                      min-w-full
+                      sm:px-6
+                      lg:px-8
+                    "
                   >
                     <div
-                      class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
+                      class="
+                        shadow
+                        overflow-hidden
+                        border-b border-gray-200
+                        sm:rounded-lg
+                      "
                     >
                       <table
                         class="min-w-full divide-y divide-gray-200"
@@ -197,25 +350,61 @@
                           <tr>
                             <th
                               scope="col"
-                              class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                              class="
+                                px-6
+                                py-3
+                                bg-gray-50
+                                text-left text-xs
+                                font-medium
+                                text-gray-500
+                                uppercase
+                                tracking-wider
+                              "
                             >
                               Produto
                             </th>
                             <th
                               scope="col"
-                              class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                              class="
+                                px-6
+                                py-3
+                                bg-gray-50
+                                text-left text-xs
+                                font-medium
+                                text-gray-500
+                                uppercase
+                                tracking-wider
+                              "
                             >
                               Quantidade
                             </th>
                             <th
                               scope="col"
-                              class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                              class="
+                                px-6
+                                py-3
+                                bg-gray-50
+                                text-left text-xs
+                                font-medium
+                                text-gray-500
+                                uppercase
+                                tracking-wider
+                              "
                             >
                               Tipo
                             </th>
                             <th
                               scope="col"
-                              class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                              class="
+                                px-6
+                                py-3
+                                bg-gray-50
+                                text-left text-xs
+                                font-medium
+                                text-gray-500
+                                uppercase
+                                tracking-wider
+                              "
                             >
                               Data
                             </th>
