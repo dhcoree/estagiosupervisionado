@@ -241,7 +241,6 @@ function makeReport(table_id = "product_table", separator = ";") {
   document.body.removeChild(link);
 }
 
-
 // Getting all fornecedores and update table
 async function getAllFornecedores() {
   try {
@@ -296,7 +295,7 @@ async function getAllMarca() {
     if (!json.success) throw json.error;
 
     // Clean table rows
-    select.innerHTML = `<option value="" selected>Selecione um marca</option>`;
+    select.innerHTML = `<option value="" selected>Selecione uma marca</option>`;
 
     // Mounting table rows
     let rows = select.innerHTML;
@@ -360,4 +359,3 @@ getAll();
 getAllMarca();
 getAllFornecedores();
 getAllGrupo();
-

@@ -6,6 +6,8 @@ const express = require("express"),
 const product = require("./../model/produto.model");
 const estoque = require("./../model/estoque.model");
 const fornecedor = require("./../model/fornecedor.model");
+const marca = require("./../model/marca.model");
+const grupo = require("./../model/grupo.model");
 
 // Setting GET path
 route.get("/", async (request, response) => {
@@ -31,25 +33,57 @@ route.get("/", async (request, response) => {
       payload["price"] = price;
     }
 
+    // pegando todos produtos
     let produtos = await product.read(payload);
 
-    // pegando todos fornecedores
-    const fornecedores = await fornecedor.read({})
+    // trocando os ids dos marcas pelos nomes
+    const marcas = await marca.read({});
 
-    // trocando os ids dos fornecedores pelos nomes
-    produtos = produtos.map(p => {
-      let fornecedorDescricao = fornecedores.find(f => f._id === p.fornecedor)
+    produtos = produtos.map((p) => {
+      let marcaDescricao = marcas.find((f) => f._id === p.marca);
 
-      if (!fornecedorDescricao)
-        fornecedorDescricao = ''
-      else
-        fornecedorDescricao = `${fornecedorDescricao.nome} (${fornecedorDescricao.cnpj})`
+      if (!marcaDescricao) marcaDescricao = "";
+      else marcaDescricao = `${marcaDescricao.nome}`;
 
       return {
         ...p,
-        fornecedor: fornecedorDescricao
-      }
-    })
+        marca: marcaDescricao,
+      };
+    });
+
+    // trocando os ids dos grupos pelos nomes
+    const grupos = await grupo.read({});
+
+    produtos = produtos.map((p) => {
+      let grupoDescricao = grupos.find((f) => f._id === p.grupo);
+
+      if (!grupoDescricao) grupoDescricao = "";
+      else grupoDescricao = `${grupoDescricao.nome}`;
+
+      return {
+        ...p,
+        grupo: grupoDescricao,
+      };
+    });
+
+    // pegando todos fornecedores
+    const fornecedores = await fornecedor.read({});
+
+    // trocando os ids dos fornecedores pelos nomes
+    produtos = produtos.map((p) => {
+      let fornecedorDescricao = fornecedores.find(
+        (f) => f._id === p.fornecedor
+      );
+
+      if (!fornecedorDescricao) fornecedorDescricao = "";
+      else
+        fornecedorDescricao = `${fornecedorDescricao.nome} (${fornecedorDescricao.cnpj})`;
+
+      return {
+        ...p,
+        fornecedor: fornecedorDescricao,
+      };
+    });
 
     if (description) {
       produtos = produtos.filter((product) => {
@@ -60,9 +94,8 @@ route.get("/", async (request, response) => {
         return false;
       });
     }
-    
 
-    console.log('depois', produtos)
+    console.log("depois", produtos);
 
     produtos = await Promise.all(
       produtos.map(async (produto) => {
@@ -80,7 +113,7 @@ route.get("/", async (request, response) => {
       })
     );
 
-    console.log('depois', produtos)
+    console.log("depois", produtos);
 
     response.json({ success: true, data: produtos, error: null });
   } catch (error) {
@@ -92,7 +125,7 @@ route.get("/", async (request, response) => {
 // Setting POST path
 route.post("/", async (request, response) => {
   try {
-    let { description, price, quantidade, fornecedor } =
+    let { description, price, quantidade, fornecedor, marca, grupo } =
       typeof request.body == "string" ? JSON.parse(request.body) : request.body;
 
     if (!description)
@@ -106,6 +139,10 @@ route.post("/", async (request, response) => {
     if (!fornecedor)
       throw { message: `Invalid parameters - 'fornecedor' is required` };
 
+    if (!marca) throw { message: `Invalid parameters - 'marca' is required` };
+
+    if (!grupo) throw { message: `Invalid parameters - 'grupo' is required` };
+
     price = parseFloat(price);
 
     if (isNaN(price))
@@ -118,6 +155,8 @@ route.post("/", async (request, response) => {
       description,
       price,
       fornecedor,
+      marca,
+      grupo,
     };
 
     const newProduct = await product.create(payload);
