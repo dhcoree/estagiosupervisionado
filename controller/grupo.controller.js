@@ -8,7 +8,7 @@ const grupo = require("../model/grupo.model");
 // Setting GET path
 route.get("/", async (request, response) => {
   try {
-    let { _id, nome } = request.query;
+    let { _id, nome} = request.query;
 
     const payload = {};
 
@@ -19,6 +19,7 @@ route.get("/", async (request, response) => {
     if (nome) {
       payload["nome"] = nome;
     }
+
 
     const grupos = await grupo.read(payload);
 
@@ -35,7 +36,8 @@ route.post("/", async (request, response) => {
       typeof request.body == "string" ? JSON.parse(request.body) : request.body;
 
     if (!nome) throw { message: `Invalid parameters - 'nome' is required` };
-
+   
+    
     const payload = {
       nome,
     };
@@ -44,7 +46,7 @@ route.post("/", async (request, response) => {
 
     response.json({ success: true, data: novogrupo, error: null });
   } catch (error) {
-    console.log(error);
+    console.log(error)
     response.status(500).json({ success: false, data: null, error });
   }
 });
@@ -60,7 +62,8 @@ route.put("/:_id", async (request, response) => {
 
     if (!_id) throw { message: `Invalid parameters - '_id' is required` };
     if (!nome) throw { message: `Invalid parameters - 'nome' is required` };
-
+   
+    
     const payload = {
       nome,
     };

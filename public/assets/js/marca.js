@@ -49,7 +49,9 @@ async function getAll() {
           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium acoes">
             <button onclick="update('${marca._id}', '${marca.nome}'
       })" class="text-indigo-600 hover:text-indigo-900 ">Editar</button>
-            <button onclick="remove('${marca._id}')" class="text-indigo-600 hover:text-indigo-900">Deletar</button>
+            <button onclick="remove('${
+              marca._id
+            }')" class="text-indigo-600 hover:text-indigo-900">Deletar</button>
           </td>
         </tr>
       `;

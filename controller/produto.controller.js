@@ -5,6 +5,7 @@ const express = require("express"),
 // Import Product Model
 const product = require("./../model/produto.model");
 const estoque = require("./../model/estoque.model");
+const fornecedor = require("./../model/fornecedor.model");
 
 // Setting GET path
 route.get("/", async (request, response) => {
@@ -32,6 +33,24 @@ route.get("/", async (request, response) => {
 
     let produtos = await product.read(payload);
 
+    // pegando todos fornecedores
+    const fornecedores = await fornecedor.read({})
+
+    // trocando os ids dos fornecedores pelos nomes
+    produtos = produtos.map(p => {
+      let fornecedorDescricao = fornecedores.find(f => f._id === p.fornecedor)
+
+      if (!fornecedorDescricao)
+        fornecedorDescricao = ''
+      else
+        fornecedorDescricao = `${fornecedorDescricao.nome} (${fornecedorDescricao.cnpj})`
+
+      return {
+        ...p,
+        fornecedor: fornecedorDescricao
+      }
+    })
+
     if (description) {
       produtos = produtos.filter((product) => {
         if (product.description.indexOf(description) != -1) {
@@ -41,6 +60,9 @@ route.get("/", async (request, response) => {
         return false;
       });
     }
+    
+
+    console.log('depois', produtos)
 
     produtos = await Promise.all(
       produtos.map(async (produto) => {
@@ -58,6 +80,8 @@ route.get("/", async (request, response) => {
       })
     );
 
+    console.log('depois', produtos)
+
     response.json({ success: true, data: produtos, error: null });
   } catch (error) {
     console.log(error);
@@ -68,7 +92,7 @@ route.get("/", async (request, response) => {
 // Setting POST path
 route.post("/", async (request, response) => {
   try {
-    let { description, price, quantidade } =
+    let { description, price, quantidade, fornecedor } =
       typeof request.body == "string" ? JSON.parse(request.body) : request.body;
 
     if (!description)
@@ -78,6 +102,9 @@ route.post("/", async (request, response) => {
 
     if (!quantidade)
       throw { message: `Invalid parameters - 'quantidade' is required` };
+
+    if (!fornecedor)
+      throw { message: `Invalid parameters - 'fornecedor' is required` };
 
     price = parseFloat(price);
 
@@ -90,6 +117,7 @@ route.post("/", async (request, response) => {
     const payload = {
       description,
       price,
+      fornecedor,
     };
 
     const newProduct = await product.create(payload);

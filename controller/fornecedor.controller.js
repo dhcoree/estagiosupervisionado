@@ -3,12 +3,12 @@ const express = require("express"),
   route = express.Router();
 
 // Import fornecedor Model
-const fornecedor = require("../model/fornecedor.model");
+const fornecedor = require("./../model/fornecedor.model");
 
 // Setting GET path
 route.get("/", async (request, response) => {
   try {
-    let { _id, nome, idade } = request.query;
+    let { _id, nome, cnpj } = request.query;
 
     const payload = {};
 
@@ -20,18 +20,16 @@ route.get("/", async (request, response) => {
       payload["nome"] = nome;
     }
 
-    if (idade) {
-      idade = parseFloat(idade);
+    if (cnpj) {
+      cnpj = String(cnpj);
 
-      if (isNaN(idade))
-        throw { message: `Invalid parameters - 'idade' is not a number` };
-
-      payload["idade"] = idade;
+      if ((!cnpj))
+      payload["cnpj"] = cnpj;
     }
 
-    const fornecedors = await fornecedor.read(payload);
+    const fornecedores = await fornecedor.read(payload);
 
-    response.json({ success: true, data: fornecedors, error: null });
+    response.json({ success: true, data: fornecedores, error: null });
   } catch (error) {
     response.status(500).json({ success: false, data: [], error });
   }
@@ -40,25 +38,20 @@ route.get("/", async (request, response) => {
 // Setting POST path
 route.post("/", async (request, response) => {
   try {
-    let { nome, idade } =
+    let { nome, cnpj } =
       typeof request.body == "string" ? JSON.parse(request.body) : request.body;
 
     if (!nome) throw { message: `Invalid parameters - 'nome' is required` };
-    if (!idade) throw { message: `Invalid parameters - 'idade' is required` };
-
-    idade = parseFloat(idade);
-
-    if (isNaN(idade))
-      throw { message: `Invalid parameters - 'idade' is not a number` };
+    if (!cnpj) throw { message: `Invalid parameters - 'cnpj' is required` };
 
     const payload = {
       nome,
-      idade,
+      cnpj,
     };
 
-    const novofornecedor = await fornecedor.create(payload);
+    const novoFornecedor = await fornecedor.create(payload);
 
-    response.json({ success: true, data: novofornecedor, error: null });
+    response.json({ success: true, data: novoFornecedor, error: null });
   } catch (error) {
     response.status(500).json({ success: false, data: null, error });
   }
@@ -68,23 +61,23 @@ route.post("/", async (request, response) => {
 route.put("/:_id", async (request, response) => {
   try {
     let { _id } = request.params,
-      { nome, idade } =
+      { nome, cnpj } =
         typeof request.body == "string"
           ? JSON.parse(request.body)
           : request.body;
 
     if (!_id) throw { message: `Invalid parameters - '_id' is required` };
     if (!nome) throw { message: `Invalid parameters - 'nome' is required` };
-    if (!idade) throw { message: `Invalid parameters - 'idade' is required` };
+    if (!cnpj) throw { message: `Invalid parameters - 'cnpj' is required` };
 
-    idade = parseFloat(idade);
+    cnpj = String(cnpj);
 
-    if (isNaN(idade))
-      throw { message: `Invalid parameters - 'idade' is not a number` };
+    if ((!cnpj))
+      throw { message: `Invalid parameters - 'cnpj' is not a number` };
 
     const payload = {
       nome,
-      idade,
+      cnpj,
     };
 
     const numReplaced = await fornecedor.update(_id, payload);

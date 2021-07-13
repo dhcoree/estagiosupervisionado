@@ -8,7 +8,8 @@ const marca = require("../model/marca.model");
 // Setting GET path
 route.get("/", async (request, response) => {
   try {
-    let { _id, nome } = request.query;
+    
+    let { _id, nome} = request.query;
 
     const payload = {};
 
@@ -19,6 +20,7 @@ route.get("/", async (request, response) => {
     if (nome) {
       payload["nome"] = nome;
     }
+
 
     const marcas = await marca.read(payload);
 
@@ -31,11 +33,12 @@ route.get("/", async (request, response) => {
 // Setting POST path
 route.post("/", async (request, response) => {
   try {
-    let { nome } =
+    let { nome, } =
       typeof request.body == "string" ? JSON.parse(request.body) : request.body;
 
     if (!nome) throw { message: `Invalid parameters - 'nome' is required` };
-
+   
+    
     const payload = {
       nome,
     };
@@ -59,7 +62,8 @@ route.put("/:_id", async (request, response) => {
 
     if (!_id) throw { message: `Invalid parameters - '_id' is required` };
     if (!nome) throw { message: `Invalid parameters - 'nome' is required` };
-
+   
+    
     const payload = {
       nome,
     };

@@ -52,6 +52,7 @@ async function getAll() {
       rows += `
         <tr>
           <td class="${styles}">${product.cliente}</td>
+          <td class="${styles}">${product.marca}</td>
           <td class="${styles}">${product.produto}</td>
           <td class="${styles}">${parseInt(product.quantidade)}</td>
           <td class="${styles}">${moneyFormatter(product.total)}</td>
@@ -254,6 +255,42 @@ async function getAllProdutos() {
   }
 }
 
+// Getting all marca and update table
+async function getAllMarca() {
+  try {
+    // Getting form and table HTML elements
+    const select = document.body.querySelector("#produto_marca");
+
+    // Mount URL Request
+    let urlRequest = `${location.origin}/api/marca`;
+
+    // Making request
+    const response = await fetch(urlRequest);
+    // Extract JSON
+    const json = await response.json();
+
+    // Verify if request has error
+    if (!json.success) throw json.error;
+
+    // Clean table rows
+    select.innerHTML = `<option value="" selected>Selecione um marca</option>`;
+
+    // Mounting table rows
+    let rows = select.innerHTML;
+    for (const marca of json.data) {
+      rows += `
+        <option value="${marca._id}">
+         ${marca.nome}
+        </option>
+      `;
+    }
+    // Mounting table rows
+    select.innerHTML = rows;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 function cancelUpdate() {
   // Getting cancel update button and form HTML elements
   const button = document.querySelector("#cancel_update"),
@@ -316,6 +353,7 @@ form.addEventListener("submit", submitForm);
 getAll();
 getAllClientes();
 getAllProdutos();
+getAllMarca();
 
 // evento para atualizar o valor total da compra
 document

@@ -54,6 +54,9 @@ async function getAll() {
           <td class="${styles}">${product.description}</td>
           <td class="${styles}">${moneyFormatter(product.price)}</td>
           <td class="${styles}">${product.quantidade}</td>
+          <td class="${styles}">${product.fornecedor}</td>
+          <td class="${styles}">${product.grupo}</td>
+          <td class="${styles}">${product.marca}</td>
           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium acoes">
             <button onclick="update('${product._id}', '${
         product.description
@@ -140,7 +143,7 @@ async function submitForm(event) {
   try {
     // Getting form and inputs
     const form = document.querySelector("form"),
-      inputs = Array.from(form.querySelectorAll("input"));
+      inputs = Array.from(form.querySelectorAll("input, select"));
 
     // Create product object payload
     const product = {};
@@ -238,6 +241,115 @@ function makeReport(table_id = "product_table", separator = ";") {
   document.body.removeChild(link);
 }
 
+
+// Getting all fornecedores and update table
+async function getAllFornecedores() {
+  try {
+    // Getting form and table HTML elements
+    const select = document.body.querySelector("#produto_fornecedor");
+
+    // Mount URL Request
+    let urlRequest = `${location.origin}/api/fornecedor`;
+
+    // Making request
+    const response = await fetch(urlRequest);
+    // Extract JSON
+    const json = await response.json();
+
+    // Verify if request has error
+    if (!json.success) throw json.error;
+
+    // Clean table rows
+    select.innerHTML = `<option value="" selected>Selecione um fornecedor</option>`;
+
+    // Mounting table rows
+    let rows = select.innerHTML;
+    for (const fornecedor of json.data) {
+      rows += `
+        <option value="${fornecedor._id}">
+         ${fornecedor.nome} (${fornecedor.cnpj})
+        </option>
+      `;
+    }
+    // Mounting table rows
+    select.innerHTML = rows;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// Getting all marcas and update table
+async function getAllMarca() {
+  try {
+    // Getting form and table HTML elements
+    const select = document.body.querySelector("#produto_marca");
+
+    // Mount URL Request
+    let urlRequest = `${location.origin}/api/marca`;
+
+    // Making request
+    const response = await fetch(urlRequest);
+    // Extract JSON
+    const json = await response.json();
+
+    // Verify if request has error
+    if (!json.success) throw json.error;
+
+    // Clean table rows
+    select.innerHTML = `<option value="" selected>Selecione um marca</option>`;
+
+    // Mounting table rows
+    let rows = select.innerHTML;
+    for (const marca of json.data) {
+      rows += `
+        <option value="${marca._id}">
+         ${marca.nome}
+        </option>
+      `;
+    }
+    // Mounting table rows
+    select.innerHTML = rows;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// Getting all grupo and update table
+async function getAllGrupo() {
+  try {
+    // Getting form and table HTML elements
+    const select = document.body.querySelector("#produto_grupo");
+
+    // Mount URL Request
+    let urlRequest = `${location.origin}/api/grupo`;
+
+    // Making request
+    const response = await fetch(urlRequest);
+    // Extract JSON
+    const json = await response.json();
+
+    // Verify if request has error
+    if (!json.success) throw json.error;
+
+    // Clean table rows
+    select.innerHTML = `<option value="" selected>Selecione um grupo</option>`;
+
+    // Mounting table rows
+    let rows = select.innerHTML;
+    for (const grupo of json.data) {
+      rows += `
+        <option value="${grupo._id}">
+         ${grupo.nome}
+        </option>
+      `;
+    }
+    // Mounting table rows
+    select.innerHTML = rows;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 // Getting form
 const form = document.body.querySelector("form");
 
@@ -245,3 +357,7 @@ const form = document.body.querySelector("form");
 form.addEventListener("submit", submitForm);
 // Update table rows
 getAll();
+getAllMarca();
+getAllFornecedores();
+getAllGrupo();
+
