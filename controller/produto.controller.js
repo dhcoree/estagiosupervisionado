@@ -199,7 +199,7 @@ route.post('/', async (request, response) => {
 route.put('/:_id', async (request, response) => {
   try {
     let { _id } = request.params,
-      { description, price, quantidade } =
+      { description, price, quantidade, fornecedor, marca, grupo } =
         typeof request.body == 'string'
           ? JSON.parse(request.body)
           : request.body
@@ -216,7 +216,10 @@ route.put('/:_id', async (request, response) => {
 
     const payload = {
       description,
-      price
+      price,
+      fornecedor,
+      marca,
+      grupo
     }
 
     const numReplaced = await product.update(_id, payload)
@@ -241,13 +244,9 @@ route.delete('/:_id', async (request, response) => {
 
     const [produtoAtual] = await product.read(request.params)
 
-    console.log(produtoAtual)
-
     const estoques = await estoque.read({
       produto: produtoAtual.description
     })
-
-    console.log(estoques)
 
     const numRemoved = await product.delete(_id)
 
