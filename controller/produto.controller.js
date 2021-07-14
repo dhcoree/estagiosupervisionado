@@ -180,7 +180,7 @@ route.post('/', async (request, response) => {
             await marca.update(m._id, {
               ...m,
               produtos: m.produtos
-                ? [...m.produtos, newProduct.description]
+                ? [...new Set([...m.produtos, payload.description])]
                 : [newProduct.description]
             })
           }
@@ -199,10 +199,16 @@ route.post('/', async (request, response) => {
 route.put('/:_id', async (request, response) => {
   try {
     let { _id } = request.params,
-      { description, price, quantidade, fornecedor, marca, grupo } =
-        typeof request.body == 'string'
-          ? JSON.parse(request.body)
-          : request.body
+      {
+        description,
+        price,
+        quantidade,
+        fornecedor,
+        marca: marcaParam,
+        grupo
+      } = typeof request.body == 'string'
+        ? JSON.parse(request.body)
+        : request.body
 
     if (!_id) throw { message: `Invalid parameters - '_id' is required` }
     if (!description)
@@ -218,7 +224,7 @@ route.put('/:_id', async (request, response) => {
       description,
       price,
       fornecedor,
-      marca,
+      marca: marcaParam,
       grupo
     }
 
@@ -229,6 +235,22 @@ route.put('/:_id', async (request, response) => {
       tipo: 'Entrada',
       dataInclusao: new Date().toLocaleString()
     })
+
+    const marcas = await marca.read({})
+
+    await Promise.all(
+      marcas.map(async m => {
+        if (m._id === marcaParam) {
+          await marca.update(m._id, {
+            ...m,
+            produtos: m.produtos
+              ? [...new Set([...m.produtos, payload.description])]
+              : [payload.description]
+          })
+        }
+      })
+    )
+
     response.json({ success: true, data: numReplaced, error: null })
   } catch (error) {
     response.status(500).json({ success: false, data: 0, error })
